@@ -6,9 +6,7 @@ const Navbar = () => {
       <li>
         <NavLink to={"/"}>HOME</NavLink>
       </li>
-      <li>
-        <NavLink to={"/contact"}>CONTACT US</NavLink>
-      </li>
+
       <li>
         <NavLink to={"/dashboard"}>DASHBOARD</NavLink>
       </li>
@@ -17,6 +15,9 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink to={"/our-shop"}>OUR SHOP</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/contact"}>CONTACT US</NavLink>
       </li>
     </>
   );
