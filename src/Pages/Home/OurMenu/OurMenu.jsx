@@ -1,6 +1,10 @@
 import { Helmet } from "react-helmet-async";
 import SectionBanner from "../../../Shared/SectionBanner/SectionBanner";
 import bImg from "../../../assets/menu/banner3.jpg";
+import dessertImg from "../../../assets/menu/dessert-bg.jpeg";
+import pizzaImg from "../../../assets/menu/pizza-bg.jpg";
+import saladImg from "../../../assets/menu/salad-bg.jpg";
+import soupImg from "../../../assets/menu/soup-bg.jpg";
 import useMenu from "../../../Hooks/useMenu";
 import SectionTitle from "../../../Components/SectionTitle";
 import MenuCategory from "./MenuCategory/MenuCategory";
@@ -21,7 +25,10 @@ const OurMenu = () => {
         <SectionBanner img={bImg} title="OUR MENU" />
         <SectionTitle subtitle="---Don't miss---" title="TODAY'S OFFER" />
         <MenuCategory items={offered} />
-        <MenuCategory items={dessert} title="dessert" />
+        <MenuCategory items={dessert} title="DESSERT" coverImg={dessertImg} />
+        <MenuCategory items={pizza} title="PIZZA" coverImg={pizzaImg} />
+        <MenuCategory items={salad} title="SALAD" coverImg={pizzaImg} />
+        <MenuCategory items={soup} title="SOUP" coverImg={pizzaImg} />
       </div>
     </div>
   );

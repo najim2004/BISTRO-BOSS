@@ -4,10 +4,10 @@ import SectionBanner from "../../../../Shared/SectionBanner/SectionBanner";
 
 const MenuCategory = ({ items, title, coverImg }) => {
   return (
-    <div className="">
+    <div className="mt-16">
       {title && <SectionBanner img={coverImg} title={title} />}
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 mt-16 gap-6">
         {items?.map((item) => (
           <MenuItem key={item._id} item={item} />
         ))}
