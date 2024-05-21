@@ -3,7 +3,7 @@ import { Parallax } from "react-parallax";
 
 const SectionBanner = ({ img, title }) => {
   return (
-    <div className=" mb-12">
+    <div className="mb-12 w-full">
       <Parallax
         blur={{ min: -15, max: 15 }}
         bgImage={img}
