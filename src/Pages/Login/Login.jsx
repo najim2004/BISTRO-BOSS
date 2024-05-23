@@ -6,13 +6,19 @@ import {
   LoadCanvasTemplateNoReload,
   validateCaptcha,
 } from "react-simple-captcha";
+import useAuth from "../../Hooks/useAuth";
 
 const Login = () => {
+  const { loginUser } = useAuth();
+
   const captchaRef = useRef(null);
+
   const [disabled, setDisabled] = useState(true);
+
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
+
   const handleValidateCaptcha = () => {
     const captchaValue = captchaRef.current.value;
     console.log(captchaValue);
@@ -22,13 +28,19 @@ const Login = () => {
       setDisabled(true);
     }
   };
+
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+    try {
+      loginUser(email, password);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
+
   return (
     <div
       className="w-full bg-cover h-full"
