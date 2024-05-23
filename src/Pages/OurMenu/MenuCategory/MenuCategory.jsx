@@ -24,8 +24,8 @@ const MenuCategory = ({ items, title, coverImg, btn }) => {
 
 MenuCategory.propTypes = {
   items: PropTypes.array.isRequired,
-  title: PropTypes.string.isRequired,
-  coverImg: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  coverImg: PropTypes.string,
   btn: PropTypes.string.isRequired,
 };
 

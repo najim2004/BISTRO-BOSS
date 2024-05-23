@@ -4,7 +4,8 @@ import Navbar from "./Shared/Navbar/Navbar";
 
 const App = () => {
   const location = useLocation();
-  const isLoginRoute = location.pathname.includes("login");
+  const isLoginRoute =
+    location.pathname.includes("login") || location.pathname.includes("signup");
   return (
     <div>
       {isLoginRoute || <Navbar />}

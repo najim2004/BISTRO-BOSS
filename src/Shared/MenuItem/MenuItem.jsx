@@ -19,7 +19,7 @@ const MenuItem = ({ item }) => {
 };
 
 MenuItem.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: PropTypes.object,
 };
 
 export default MenuItem;

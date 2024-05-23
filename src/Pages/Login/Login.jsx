@@ -7,8 +7,11 @@ import {
   validateCaptcha,
 } from "react-simple-captcha";
 import useAuth from "../../Hooks/useAuth";
+import { Link } from "react-router-dom";
+import useHelmet from "../../Hooks/useHelmet";
 
 const Login = () => {
+  const helmet = useHelmet("Login | BISTRO-BOSS");
   const { loginUser } = useAuth();
 
   const captchaRef = useRef(null);
@@ -46,7 +49,8 @@ const Login = () => {
       className="w-full bg-cover h-full"
       style={{ backgroundImage: `url(${loginBg})` }}
     >
-      <div className="hero min-h-screen">
+      {helmet}
+      <div className="hero max-w-[900px] mx-auto min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
             <h1 className="text-5xl font-bold">Login now!</h1>
@@ -107,11 +111,20 @@ const Login = () => {
                 </div>
               </div>
               <div className="form-control mt-6">
-                <button disabled={disabled} className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  className="btn bg-[rgba(209,160,84,0.70)]"
+                >
                   Login
                 </button>
               </div>
             </form>
+            <p className="text-[rgba(209,160,84,0.70)] text-center mb-5">
+              New Here?{" "}
+              <Link className="font-semibold" to={"/signup"}>
+                Create an Account
+              </Link>
+            </p>
           </div>
         </div>
       </div>
