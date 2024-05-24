@@ -1,22 +1,32 @@
 import { useForm } from "react-hook-form";
 import useHelmet from "../../Hooks/useHelmet";
 import useAuth from "../../Hooks/useAuth";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const helmet = useHelmet("SingUp | BISTRO-BOSS");
-  const { registerUser, updateUserProfile } = useAuth();
+  const { registerUser, updateUserProfile, use } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
     const { name, email, password, photo } = data;
     try {
-      await registerUser(email, password);
+      const user = await registerUser(email, password);
+
       await updateUserProfile(name, photo);
+      if (user.user) {
+        reset();
+        navigate("/");
+      }
+
+      console.log(user);
     } catch (err) {
       console.log(err);
     }
@@ -27,7 +37,7 @@ const SignUp = () => {
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">SignUP now!</h1>
+            <h1 className="text-5xl font-bold">SignUp now!</h1>
             <p className="py-6">
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
               excepturi exercitationem quasi. In deleniti eaque aut repudiandae
@@ -113,6 +123,12 @@ const SignUp = () => {
                 <button className="btn bg-[#d1a054]">SignUp</button>
               </div>
             </form>
+            <p className="text-[rgba(209,160,84,0.70)] text-center mb-5">
+              Already have an account?{" "}
+              <Link className="font-semibold" to={"/login"}>
+                Login here!
+              </Link>
+            </p>
           </div>
         </div>
       </div>

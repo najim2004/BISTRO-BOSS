@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
+  const { logOutUser, user } = useAuth();
   const navOptions = (
     <>
       <li>
@@ -55,7 +57,22 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navOptions}</ul>
         </div>
         <div className="navbar-end">
-          <Link to={'/login'} className="btn-sm btn">Login</Link>
+          {user ? (
+            <div className="flex gap-6 items-center">
+              <img
+                src={user?.photoURL}
+                className="size-12 rounded-full object-cover bg-gray-300"
+                alt=""
+              />
+              <button onClick={() => logOutUser()} className="btn-sm btn">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link to={"/login"} className="btn-sm btn">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>
