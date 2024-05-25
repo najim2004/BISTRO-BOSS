@@ -1,8 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import { BsCart3 } from "react-icons/bs";
+import useCart from "../../Hooks/useCart";
 
 const Navbar = () => {
   const { logOutUser, user } = useAuth();
+  const [cart] = useCart();
   const navOptions = (
     <>
       <li>
@@ -56,7 +59,15 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navOptions}</ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end gap-5">
+          <Link to={"/dashboard/cart"}>
+            <button className="btn btn-sm border-none group hover:bg-transparent hover:!text-red-500 h-10 bg-transparent text-white gap-0 px-1 !flex items-center ">
+              <BsCart3 className="!text-2xl" />
+              <div className="badge bg-transparent border-none group-hover:text-red-500 p-0 text-white">
+                +{cart.length}
+              </div>
+            </button>
+          </Link>
           {user ? (
             <div className="flex gap-6 items-center">
               <img
