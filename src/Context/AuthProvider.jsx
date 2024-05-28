@@ -5,26 +5,49 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../Firebase/Firebase.config";
+import { GoogleAuthProvider } from "firebase/auth";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 export const AuthData = createContext(null);
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
+  const axiosPublic = useAxiosPublic();
 
   const registerUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
+  const googleProvider = new GoogleAuthProvider();
+  const LoginByGoogle = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        // store the token
+        const userInfo = { emil: currentUser.email };
+        axiosPublic
+          .post("/jwt", userInfo)
+          .then(({ data }) => {
+            if (data.token) {
+              localStorage.setItem("access_token", data.token);
+            }
+          })
+          .catch((err) => {
+            console.log("jwt get related error from client", err);
+          });
       } else {
         setUser(null);
+        localStorage.removeItem("access_token");
       }
       setLoading(false);
     });
@@ -58,6 +81,7 @@ const AuthProvider = ({ children }) => {
     loginUser,
     logOutUser,
     updateUserProfile,
+    LoginByGoogle,
   };
   return <AuthData.Provider value={dataObj}>{children}</AuthData.Provider>;
 };

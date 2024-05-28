@@ -1,16 +1,21 @@
 import { useForm } from "react-hook-form";
 import useHelmet from "../../Hooks/useHelmet";
 import useAuth from "../../Hooks/useAuth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import GoogleLogin from "../../Components/SicialLogin/GoogleLogin";
 
 const SignUp = () => {
+  const axiosPublic = useAxiosPublic();
   const helmet = useHelmet("SingUp | BISTRO-BOSS");
+  const location = useLocation();
+  const from = location.state.from;
   const { registerUser, updateUserProfile, use } = useAuth();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm();
@@ -22,11 +27,20 @@ const SignUp = () => {
 
       await updateUserProfile(name, photo);
       if (user.user) {
-        reset();
-        navigate("/");
+        const userInfo = { name: name, email: email };
+        const { data } = await axiosPublic.post("/users", userInfo);
+        if (data.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Account created successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          reset();
+          navigate("from");
+        }
       }
-
-      console.log(user);
     } catch (err) {
       console.log(err);
     }
@@ -45,7 +59,7 @@ const SignUp = () => {
             </p>
           </div>
           <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+            <form onSubmit={handleSubmit(onSubmit)} className="card-body !pb-4">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name</span>
@@ -123,7 +137,8 @@ const SignUp = () => {
                 <button className="btn bg-[#d1a054]">SignUp</button>
               </div>
             </form>
-            <p className="text-[rgba(209,160,84,0.70)] text-center mb-5">
+            <GoogleLogin from={from} />
+            <p className="text-[rgba(209,160,84,0.70)] text-center my-5">
               Already have an account?{" "}
               <Link className="font-semibold" to={"/login"}>
                 Login here!

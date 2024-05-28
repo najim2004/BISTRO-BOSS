@@ -10,6 +10,7 @@ import useAuth from "../../Hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useHelmet from "../../Hooks/useHelmet";
 import Swal from "sweetalert2";
+import GoogleLogin from "../../Components/SicialLogin/GoogleLogin";
 
 const Login = () => {
   const helmet = useHelmet("Login | BISTRO-BOSS");
@@ -81,7 +82,7 @@ const Login = () => {
             </p>
           </div>
           <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <form onSubmit={handleLogin} className="card-body">
+            <form onSubmit={handleLogin} className="card-body !pb-4">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -134,9 +135,14 @@ const Login = () => {
                 </button>
               </div>
             </form>
-            <p className="text-[rgba(209,160,84,0.70)] text-center mb-5">
+            <GoogleLogin from={from} />
+            <p className="text-[rgba(209,160,84,0.70)] text-center my-5">
               New Here?{" "}
-              <Link className="font-semibold" to={"/signup"}>
+              <Link
+                className="font-semibold"
+                to={"/signup"}
+                state={{ from: from }}
+              >
                 Create an Account
               </Link>
             </p>
