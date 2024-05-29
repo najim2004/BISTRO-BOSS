@@ -16,14 +16,9 @@ const GoogleLogin = ({ from }) => {
           email: res.user?.email,
           name: res.user?.displayName,
         };
-        axiosPublic
-          .post("/users", userInfo)
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        axiosPublic.post("/users", userInfo).catch((err) => {
+          console.log(err);
+        });
         Swal.fire({
           title: "Logged in successfully",
           showClass: {

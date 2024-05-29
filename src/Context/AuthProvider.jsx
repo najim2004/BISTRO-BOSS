@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         setUser(currentUser);
         // store the token
-        const userInfo = { emil: currentUser.email };
+        const userInfo = { email: currentUser.email };
         axiosPublic
           .post("/jwt", userInfo)
           .then(({ data }) => {
@@ -54,7 +54,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       return unsubscribe();
     };
-  }, []);
+  }, [axiosPublic]);
 
   const loginUser = (email, password) => {
     setLoading(true);

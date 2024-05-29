@@ -4,17 +4,16 @@ import SectionTitle from "../../../Components/SectionTitle";
 import { FaTrash, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { GrUserAdmin } from "react-icons/gr";
+import useAuth from "../../../Hooks/useAuth";
 
 const AllUsers = () => {
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { data: users = [], refetch } = useQuery({
     queryKey: ["all-users"],
+    enabled: !!user?.email && !!localStorage.getItem("access_token"),
     queryFn: async () => {
-      const res = await axiosSecure.get("/users", {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      });
+      const res = await axiosSecure.get("/users");
       return res.data;
     },
   });

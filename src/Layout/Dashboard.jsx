@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { BsCart3 } from "react-icons/bs";
 import {
+  FaArrowAltCircleLeft,
   FaBook,
   FaCalendar,
   FaHome,
@@ -11,15 +11,23 @@ import {
   FaWallet,
 } from "react-icons/fa";
 import { FaShop, FaStar } from "react-icons/fa6";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
-  const [isAdmin, setAdmin] = useState(true);
+  const [isAdmin] = useAdmin();
+  console.log(isAdmin);
   return (
     <div className="flex max-w-[1600px] mx-auto">
       <div className="w-64 min-h-screen p-8 bg-[#D1A054]">
         <h3 className="text-2xl text-black mb-10 font-black">BISTRO BOSS</h3>
         <ul className="menu-d space-y-6">
+          <li>
+            <Link to={-1} className={"flex uppercase gap-3"}>
+              <FaArrowAltCircleLeft className="!text-2xl" />
+              GO Back
+            </Link>
+          </li>
           {isAdmin ? (
             <>
               <li>

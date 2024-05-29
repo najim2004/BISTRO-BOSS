@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import loginBg from "../../assets/others/authentication.png";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
-  LoadCanvasTemplateNoReload,
   validateCaptcha,
 } from "react-simple-captcha";
 import useAuth from "../../Hooks/useAuth";
@@ -58,7 +57,11 @@ const Login = () => {
             `,
           },
         });
-        navigate(from);
+        if (from.includes("dashboard")) {
+          navigate("/dashboard");
+        } else {
+          navigate(from);
+        }
       });
     } catch (err) {
       console.log(err.message);
@@ -122,13 +125,13 @@ const Login = () => {
                     onBlur={handleValidateCaptcha}
                     placeholder="Type the text above"
                     className=" input input-bordered"
-                    required
+                    // required
                   />
                 </div>
               </div>
               <div className="form-control mt-6">
                 <button
-                  disabled={disabled}
+                  // disabled={disabled}
                   className="btn bg-[rgba(209,160,84,0.70)]"
                 >
                   Login
